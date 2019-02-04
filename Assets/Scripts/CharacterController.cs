@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CharacterController : MonoBehaviour
 {
@@ -13,9 +14,12 @@ public class CharacterController : MonoBehaviour
     private Vector3 targetVelocity;
     private Vector3 velocity = Vector3.zero;
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
-    private Vector2 playerPos;
+    public Vector2 playerPos;
     public float runSpeed;
     public PLAYER Player;
+
+    public Tilemap gameBoardTileMap;
+    public GameObject bombPrefab;
 
 
     public enum PLAYER
@@ -75,15 +79,44 @@ public class CharacterController : MonoBehaviour
         {
             case PLAYER.PLAYER_1:
                 {    
-                    player1Movement(); 
+                    player1Movement();  
                     break;
                 }
             case PLAYER.PLAYER_2:
                 {
                     player2Movement();
+                    
                     break;
                 }
         }
+        spawnBombs(getCurrentPlayer());
+    }
+
+    public void spawnBombs(PLAYER player)
+    {
+        if (player == PLAYER.PLAYER_1)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Vector3 worldPos = Camera.main.ScreenToViewportPoint(this.transform.localPosition);
+                Vector3Int cell = gameBoardTileMap.LocalToCell(worldPos);
+                Vector3 cellCentrePos = gameBoardTileMap.GetCellCenterLocal(cell);
+
+                Instantiate(bombPrefab, cellCentrePos, Quaternion.identity);
+            }
+        }
+        else if(player == PLAYER.PLAYER_2)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Vector3 worldPos = Camera.main.ScreenToViewportPoint(player2.transform.position);
+                Vector3Int cell = gameBoardTileMap.LocalToCell(worldPos);
+                Vector3 cellCentrePos = gameBoardTileMap.GetCellCenterLocal(cell);
+
+                Instantiate(bombPrefab, cellCentrePos, Quaternion.identity);
+            }
+        }
+        
     }
 
     public void player1Movement()

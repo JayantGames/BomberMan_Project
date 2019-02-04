@@ -7,7 +7,7 @@ public class MapDestroyer : MonoBehaviour
 
     public Tilemap tileMap;
     public Tile wallTile;
-    public Tile destructibleTile;
+    public Tile destructibleTile;   
 
     public GameObject explosionPrefab;
 
@@ -51,10 +51,10 @@ public class MapDestroyer : MonoBehaviour
         if (tile == wallTile)
         {
             return false;
-        }
+        }                       
 
         if (tile == destructibleTile)
-        {
+        {                                       
             tileMap.SetTile(cell, null);
         }
 
