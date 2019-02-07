@@ -23,24 +23,36 @@ public class MapDestroyer : MonoBehaviour
 
         if (ExplodeCell(originCell + new Vector3Int(1, 0, 0)))
         {
-            ExplodeCell(originCell + new Vector3Int(2, 0, 0));
-        }
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            {
+                ExplodeCell(originCell + new Vector3Int(2, 0, 0));
+            }
+         }
 
 
         if (ExplodeCell(originCell + new Vector3Int(0, 1, 0)))
         {
-            ExplodeCell(originCell + new Vector3Int(0, 2, 0));
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            {
+                ExplodeCell(originCell + new Vector3Int(0, 2, 0));
+            }
         }
 
 
         if (ExplodeCell(originCell + new Vector3Int(-1, 0, 0)))
         {
-            ExplodeCell(originCell + new Vector3Int(-2, 0, 0));
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            {
+                ExplodeCell(originCell + new Vector3Int(-2, 0, 0));
+            }
         }
 
         if (ExplodeCell(originCell + new Vector3Int(0, -1, 0)))
         {
-            ExplodeCell(originCell + new Vector3Int(0, -2, 0));
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            {
+                ExplodeCell(originCell + new Vector3Int(0, -2, 0));
+            }
         }
     }
 

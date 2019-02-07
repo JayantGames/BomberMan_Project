@@ -7,6 +7,9 @@ TagManager:
   - Explosion
   - Walls
   - Player1
+  - Player2
+  - Bomb
+  - PowerUp
   layers:
   - Default
   - TransparentFX

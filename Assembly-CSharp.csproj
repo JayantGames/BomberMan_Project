@@ -60,13 +60,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CollisionCheck.cs" />
-    <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\RuleTile\RuleTile.cs" />
     <Compile Include="Assets\Scripts\BombExplosion.cs" />
     <Compile Include="Assets\Scripts\CharacterController.cs" />
+    <Compile Include="Assets\Scripts\CollisionCheck.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InstantiateBombs.cs" />
     <Compile Include="Assets\Scripts\MapDestroyer.cs" />
+    <Compile Include="Assets\Scripts\PowerUpListener.cs" />
+    <Compile Include="Assets\Scripts\PowerUpsManager.cs" />
     <Compile Include="Assets\Scripts\PrefabTile.cs" />
     <Compile Include="Assets\Scripts\SelfDestruct.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

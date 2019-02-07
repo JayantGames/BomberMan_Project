@@ -18,10 +18,8 @@ public class CharacterController : MonoBehaviour
     public float runSpeed;
     public PLAYER Player;
 
-    public Tilemap gameBoardTileMap;
-    public GameObject bombPrefab;
-
-
+    const float FAST_SPEED = 1.5f;
+                                  
     public enum PLAYER
     {
         PLAYER_1,
@@ -58,14 +56,12 @@ public class CharacterController : MonoBehaviour
         switch (getCurrentPlayer())
         {
             case PLAYER.PLAYER_1:
-                {
-                    playerPos = player1.transform.position;
+                {                                             
                     playerAnimator = player1.GetComponent<Animator>();
                     break;
                 }
             case PLAYER.PLAYER_2:
-                {
-                    playerPos = player2.transform.position;
+                {                                            
                     playerAnimator = player2.GetComponent<Animator>();  
                     break;
                 }
@@ -79,50 +75,58 @@ public class CharacterController : MonoBehaviour
         {
             case PLAYER.PLAYER_1:
                 {    
-                    player1Movement();  
+                    player1Movement();
+                    playerPos = player1.transform.position;
                     break;
                 }
             case PLAYER.PLAYER_2:
                 {
                     player2Movement();
-                    
+                    playerPos = player2.transform.position;
                     break;
                 }
         }
-        spawnBombs(getCurrentPlayer());
+        detectPlayerFire(getCurrentPlayer());
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.detonateBomb = true;
+            PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
+        }
     }
 
-    public void spawnBombs(PLAYER player)
+    public void detectPlayerFire(PLAYER player)
     {
         if (player == PLAYER.PLAYER_1)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Vector3 worldPos = Camera.main.ScreenToViewportPoint(this.transform.localPosition);
-                Vector3Int cell = gameBoardTileMap.LocalToCell(worldPos);
-                Vector3 cellCentrePos = gameBoardTileMap.GetCellCenterLocal(cell);
-
-                Instantiate(bombPrefab, cellCentrePos, Quaternion.identity);
+                GameManager.Instance.spawnBombs(playerPos);
             }
         }
         else if(player == PLAYER.PLAYER_2)
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                Vector3 worldPos = Camera.main.ScreenToViewportPoint(player2.transform.position);
-                Vector3Int cell = gameBoardTileMap.LocalToCell(worldPos);
-                Vector3 cellCentrePos = gameBoardTileMap.GetCellCenterLocal(cell);
-
-                Instantiate(bombPrefab, cellCentrePos, Quaternion.identity);
+                GameManager.Instance.spawnBombs(playerPos);
             }
-        }
+        }     
         
     }
 
+    
+
     public void player1Movement()
     {
-        //Horizontal Movement
-        horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed;
+        //Horizontal Movement    
+        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        {
+            horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed * FAST_SPEED;
+        }
+        else
+        {
+            horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed;
+        }
+
         playerAnimator.SetFloat("HS", horizontalSpeed);
 
         if (horizontalSpeed > 0)
@@ -143,7 +147,14 @@ public class CharacterController : MonoBehaviour
         }
 
         // Vertical Movement
-        verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed;
+        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        {                          
+            verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed * FAST_SPEED;
+        }
+        else
+        {
+            verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed;
+        }
         playerAnimator.SetFloat("VS", verticalSpeed);
 
         if (verticalSpeed > 0)
@@ -167,7 +178,14 @@ public class CharacterController : MonoBehaviour
     public void player2Movement()
     {
         //Horizontal Movement
-        horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed;
+        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        {
+            horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed * FAST_SPEED;
+        }
+        else
+        {
+            horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed;
+        }
         playerAnimator.SetFloat("HS", horizontalSpeed);
 
         if (horizontalSpeed > 0)
@@ -188,7 +206,14 @@ public class CharacterController : MonoBehaviour
         }
 
         // Vertical Movement
-        verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed;
+        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        {
+            verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed * FAST_SPEED;
+        }
+        else
+        {
+            verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed;
+        }
         playerAnimator.SetFloat("VS", verticalSpeed);
 
         if (verticalSpeed > 0)
@@ -211,17 +236,16 @@ public class CharacterController : MonoBehaviour
 
     public void playerMovement(float speed, AXIS axis)
     {
+        // Move the character by finding the target velocity
+
         if (axis == AXIS.HORIZONTAL)
-        {
-            // Move the character by finding the target velocity
+        {                              
             targetVelocity = new Vector2(speed * 2f, playerRigidbody.velocity.y);
         }
         else if (axis == AXIS.VERTICAL)
-        {
-            // Move the character by finding the target velocity
+        {                                                        
             targetVelocity = new Vector2(playerRigidbody.velocity.x, speed * 2f);
-        }
-   
+        }                 
         playerRigidbody.velocity = targetVelocity;
     }
 
