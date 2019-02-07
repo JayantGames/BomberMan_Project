@@ -1,2 +1,2 @@
 # BomberMan_Project
-Bomberman game development for an assignement
+Bomberman game development for an assignment
