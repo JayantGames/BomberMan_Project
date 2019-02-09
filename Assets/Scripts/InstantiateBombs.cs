@@ -15,8 +15,10 @@ public class InstantiateBombs : MonoBehaviour
 
     public void bombSpawner(Vector3 pos)
     {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(pos);
-        Vector3Int cell = gameBoardTileMap.WorldToCell(worldPos);
+        // Vector3 worldPos = Camera.main.ScreenToWorldPoint(pos);
+       
+
+        Vector3Int cell = gameBoardTileMap.WorldToCell(pos);
         Vector3 cellCentrePos = gameBoardTileMap.GetCellCenterWorld(cell);
 
         Instantiate(bombPrefab, cellCentrePos, Quaternion.identity);

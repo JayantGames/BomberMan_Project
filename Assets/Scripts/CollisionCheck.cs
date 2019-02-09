@@ -11,13 +11,13 @@ public class CollisionCheck : MonoBehaviour
             case "Player1":
                 {
                     GameManager.Instance.player1Life = false;
-                    Destroy(collision.gameObject);
+                    //Destroy(collision.gameObject);
                     break;
                 }
             case "Player2":
                 {
                     GameManager.Instance.player2Life = false;
-                    Destroy(collision.gameObject);
+                   // Destroy(collision.gameObject);
                     break;
                 }
             case "Bomb":

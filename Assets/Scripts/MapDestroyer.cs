@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections;
+using System.Collections;   
+using System.Collections.Generic;
 
 public class MapDestroyer : MonoBehaviour
 {
@@ -12,17 +13,21 @@ public class MapDestroyer : MonoBehaviour
 
     public GameObject explosionPrefab;
     public bool randomInstantiation;
-    public GameObject randomlyInstantiatedPowerUp;
+    public List<GameObject> randomlyInstantiatedPowerUp;
+                 
 
     private void Awake()
     {
         Instance = this;
     }
 
+
+
     public void Explode(Vector2 worldPos)
     {
         Vector3Int originCell = tileMap.WorldToCell(worldPos);
         ExplodeCell(originCell);
+        Debug.Log("PowerUpsManager.Instance.getCurrentPowerUp() : " + PowerUpsManager.Instance.getCurrentPowerUp());
 
         if (ExplodeCell(originCell + new Vector3Int(1, 0, 0)))
         {
@@ -73,37 +78,31 @@ public class MapDestroyer : MonoBehaviour
             tileMap.SetTile(cell, null);
         }
 
-        if (Random.value > 0.1)
-        {
-            for (int i = 0; i < GameManager.Instance.powerUpTilesList.Count; i++)
-            {
-                if (tile == GameManager.Instance.powerUpTilesList[i])
-                {
-                    tileMap.SetTile(cell, returnRandomPowerUp());
-                    randomInstantiation = true;
-                }
-            }
-        }
+        
 
         Vector3 pos = tileMap.GetCellCenterWorld(cell);
         Instantiate(explosionPrefab, pos, Quaternion.identity);
 
-        if (randomlyInstantiatedPowerUp != null)
-        {
-            StartCoroutine(reTagRandomInstantiatedPowerUp());
-        }
-
         return true;
     }
 
-    public PrefabTile returnRandomPowerUp()
+    public GameObject returnRandomPowerUp()
     {
-        return GameManager.Instance.powerUpTilesList[Random.Range(0, GameManager.Instance.powerUpTilesList.Count)];
+        return GameManager.Instance.powerUpPrefabsList[Random.Range(0, GameManager.Instance.powerUpPrefabsList.Count)];
     }
 
-    public IEnumerator reTagRandomInstantiatedPowerUp()
-    {
-        yield return new WaitForSeconds(3f);
-        randomlyInstantiatedPowerUp.tag = "PowerUp";
+    public IEnumerator instantiateRandomPowerUp(Vector3 cell)
+    {                                            
+        yield return new WaitForSeconds(0.65f);
+
+        if (Random.value > 0.1)
+        {
+            for (int i = 0; i < GameManager.Instance.powerUpPrefabsList.Count-1; i++)
+            {                                             
+                GameObject randomlyInstantiatedPowerUpInstance = Instantiate(returnRandomPowerUp(), cell, Quaternion.identity);
+                randomlyInstantiatedPowerUp.Add(randomlyInstantiatedPowerUpInstance);
+                randomInstantiation = true; 
+            }
+        }                                             
     }
 }

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public bool player1Life;
     public bool player2Life;
 
-    public List<GameObject> powerUpPrefabList;
+    public List<GameObject> powerUpPrefabsList;
     public List<PrefabTile> powerUpTilesList;
 
     private void Awake()
@@ -47,5 +47,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void bombDestroyed()
+    {
+        // Vector3 worldPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
+        Vector3Int cell = MapDestroyer.Instance.tileMap.WorldToCell(transform.position);
+        Vector3 cellCentrePos = MapDestroyer.Instance.tileMap.GetCellCenterWorld(cell);
+
+        StartCoroutine(MapDestroyer.Instance.instantiateRandomPowerUp(cellCentrePos));
     }
 }

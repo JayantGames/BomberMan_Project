@@ -28,14 +28,15 @@ public class BombExplosion : MonoBehaviour
 
         if (countdown <= 0f)
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() != PowerUpsManager.PowerUps.NONE)
-            {
-                PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
-            }
+           // if (PowerUpsManager.Instance.getCurrentPowerUp() != PowerUpsManager.PowerUps.NONE)
+           // {
+           //     PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
+          //  }
 
             MapDestroyer.Instance.Explode(transform.position);
+            GameManager.Instance.bombDestroyed();
             GameManager.Instance.bombsSpawnList.Remove(gameObject);
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }   
         
         if(GameManager.Instance.detonateBomb)
