@@ -4830,6 +4830,11 @@ MonoBehaviour:
   detonateBomb: 0
   player1Life: 0
   player2Life: 0
+  powerUpPrefabList:
+  - {fileID: 8181359404839587864, guid: 9cc38db8a0e92a04a9442c57430b395a, type: 3}
+  - {fileID: 3048725491174950006, guid: f6a81238265789041aea42b5e829e005, type: 3}
+  powerUpTilesList:
+  - {fileID: 11400000, guid: e46979122710b084bafbe56b4d0c65c2, type: 2}
 --- !u!4 &1134242959
 Transform:
   m_ObjectHideFlags: 0
@@ -5147,6 +5152,8 @@ MonoBehaviour:
   destructibleTile: {fileID: 11400000, guid: f5cead61b9ade294eaef2b42ad349148, type: 2}
   explosionPrefab: {fileID: 7427307990021852916, guid: b37e7941ea9e7834a9768cb519ba3c26,
     type: 3}
+  randomInstantiation: 0
+  randomlyInstantiatedPowerUp: {fileID: 0}
 --- !u!1001 &1908331279
 PrefabInstance:
   m_ObjectHideFlags: 0

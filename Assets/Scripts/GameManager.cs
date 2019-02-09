@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public bool player1Life;
     public bool player2Life;
 
+    public List<GameObject> powerUpPrefabList;
+    public List<PrefabTile> powerUpTilesList;
+
     private void Awake()
     {
         Instance = this;
