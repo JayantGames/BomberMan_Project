@@ -5,6 +5,8 @@ using UnityEngine;
 public class BombExplosion : MonoBehaviour
 {
    private float countdown = 2f;
+    public bool player1Bomb;
+    public bool player2Bomb;
 
     private void Start()
     {
@@ -27,12 +29,7 @@ public class BombExplosion : MonoBehaviour
         countdown -= Time.deltaTime;
 
         if (countdown <= 0f)
-        {
-           // if (PowerUpsManager.Instance.getCurrentPowerUp() != PowerUpsManager.PowerUps.NONE)
-           // {
-           //     PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
-          //  }
-
+        {                                 
             MapDestroyer.Instance.Explode(transform.position);
             GameManager.Instance.bombDestroyed();
             GameManager.Instance.bombsSpawnList.Remove(gameObject);

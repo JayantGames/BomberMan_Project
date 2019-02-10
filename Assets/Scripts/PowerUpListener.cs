@@ -8,9 +8,14 @@ public class PowerUpListener : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+        if (collision.gameObject.CompareTag("Player1"))
         {
-            PowerUpsManager.Instance.activatePowerUp(powerUpType);
+            PowerUpsManager.Instance.activatePowerUp(powerUpType, CharacterController.PLAYER.PLAYER_1);
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Player2"))
+        {
+            PowerUpsManager.Instance.activatePowerUp(powerUpType,CharacterController.PLAYER.PLAYER_2);
             Destroy(gameObject);
         }
     }

@@ -60,17 +60,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Makaka Games\Mobile Game Icon Pack\Scripts\SampleControl.cs" />
     <Compile Include="Assets\RuleTile\RuleTile.cs" />
     <Compile Include="Assets\Scripts\BombExplosion.cs" />
     <Compile Include="Assets\Scripts\CharacterController.cs" />
     <Compile Include="Assets\Scripts\CollisionCheck.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\InGameUISettings.cs" />
     <Compile Include="Assets\Scripts\InstantiateBombs.cs" />
     <Compile Include="Assets\Scripts\MapDestroyer.cs" />
     <Compile Include="Assets\Scripts\PowerUpListener.cs" />
     <Compile Include="Assets\Scripts\PowerUpsManager.cs" />
     <Compile Include="Assets\Scripts\PrefabTile.cs" />
+    <Compile Include="Assets\Scripts\RadialImageProgression.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement.cs" />
     <Compile Include="Assets\Scripts\SelfDestruct.cs" />
+    <None Include="Assets\Makaka Games\Mobile Game Icon Pack\Fonts\Font_Read_Me.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Qvady Assignment/AssignmentProject_QVADY/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

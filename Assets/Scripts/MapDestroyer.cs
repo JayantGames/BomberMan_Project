@@ -12,9 +12,11 @@ public class MapDestroyer : MonoBehaviour
     public Tile destructibleTile;   
 
     public GameObject explosionPrefab;
+    public GameObject coinPrefab;
     public bool randomInstantiation;
     public List<GameObject> randomlyInstantiatedPowerUp;
-                 
+
+    public int tileValue = 10;
 
     private void Awake()
     {
@@ -75,15 +77,30 @@ public class MapDestroyer : MonoBehaviour
 
         if (tile == destructibleTile)
         {
+            //  Vector3 tilePos = tileMap.GetCellCenterWorld(cell);
+            Vector3 tilePos = tileMap.GetCellCenterWorld(cell);        
+            Instantiate(coinPrefab, tilePos, Quaternion.identity);
             tileMap.SetTile(cell, null);
+            saveScore(tileValue);
         }
 
-        
-
+                 
         Vector3 pos = tileMap.GetCellCenterWorld(cell);
         Instantiate(explosionPrefab, pos, Quaternion.identity);
 
         return true;
+    }
+
+    public void saveScore(int score)
+    {
+        if (GameManager.Instance.playerBomb == CharacterController.PLAYER.PLAYER_1)
+        {
+            GameManager.Instance.player1Score += score;
+        }
+        else
+        {
+            GameManager.Instance.player2Score += score;
+        }
     }
 
     public GameObject returnRandomPowerUp()

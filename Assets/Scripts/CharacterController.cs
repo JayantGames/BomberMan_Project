@@ -89,8 +89,12 @@ public class CharacterController : MonoBehaviour
         detectPlayerFire(getCurrentPlayer());
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameManager.Instance.detonateBomb = true;
-            PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.RC_BOMBS)
+            {
+                GameManager.Instance.detonateBomb = true;
+                PowerUpsManager.Instance.currPowerUp = PowerUpsManager.PowerUps.NONE;
+                PowerUpsManager.Instance.powerUpCountdown = 0;
+            }
         }
     }
 
@@ -100,27 +104,63 @@ public class CharacterController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameManager.Instance.spawnBombs(playerPos);
+                GameManager.Instance.playerBomb = PLAYER.PLAYER_1;
+                if (GameManager.Instance.player1Powerup)
+                {
+                    if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.MORE_BOMBS)
+                    {
+                        GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.MORE_BOMBS);
+                    }
+                    else
+                    {
+                        GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.NONE);
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.NONE);
+                }  
             }
         }
         else if(player == PLAYER.PLAYER_2)
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                GameManager.Instance.spawnBombs(playerPos);
+                GameManager.Instance.playerBomb = PLAYER.PLAYER_2;
+                if (GameManager.Instance.player2Powerup)
+                {
+                    if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.MORE_BOMBS)
+                    {
+                        GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.MORE_BOMBS);
+                    }
+                    else
+                    {
+                        GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.NONE);
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.NONE);
+                }
             }
         }     
         
     }
-
-    
+           
 
     public void player1Movement()
     {
-        //Horizontal Movement    
-        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        //Horizontal Movement  
+        if (GameManager.Instance.player1Powerup)
         {
-            horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed * FAST_SPEED;
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            {
+                horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed * FAST_SPEED;
+            }
+            else
+            {
+                horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed;
+            }
         }
         else
         {
@@ -146,15 +186,23 @@ public class CharacterController : MonoBehaviour
             playerMovement(horizontalSpeed, AXIS.HORIZONTAL);
         }
 
-        // Vertical Movement
-        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
-        {                          
-            verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed * FAST_SPEED;
+        // Vertical Movement                                                                     
+        if(GameManager.Instance.player1Powerup)
+        {
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            {
+                verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed * FAST_SPEED;
+            }
+            else
+            {
+                verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed;
+            }
         }
         else
         {
             verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed;
         }
+
         playerAnimator.SetFloat("VS", verticalSpeed);
 
         if (verticalSpeed > 0)
@@ -178,14 +226,22 @@ public class CharacterController : MonoBehaviour
     public void player2Movement()
     {
         //Horizontal Movement
-        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        if (GameManager.Instance.player2Powerup)
         {
-            horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed * FAST_SPEED;
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            {
+                horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed * FAST_SPEED;
+            }
+            else
+            {
+                horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed;
+            }
         }
         else
         {
             horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed;
         }
+
         playerAnimator.SetFloat("HS", horizontalSpeed);
 
         if (horizontalSpeed > 0)
@@ -205,10 +261,17 @@ public class CharacterController : MonoBehaviour
             playerMovement(horizontalSpeed, AXIS.HORIZONTAL);
         }
 
-        // Vertical Movement
-        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+        // Vertical Movement                                                                      
+        if(GameManager.Instance.player2Powerup)
         {
-            verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed * FAST_SPEED;
+            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            {
+                verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed * FAST_SPEED;
+            }
+            else
+            {
+                verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed;
+            }    
         }
         else
         {
