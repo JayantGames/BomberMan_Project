@@ -10,7 +10,6 @@ public class SceneManagement : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-
     public void SceneLoader(int sceneIndex)
     {
         SceneManager.LoadScene("Level" + sceneIndex.ToString());

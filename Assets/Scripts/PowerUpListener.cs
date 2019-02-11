@@ -15,7 +15,7 @@ public class PowerUpListener : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Player2"))
         {
-            PowerUpsManager.Instance.activatePowerUp(powerUpType,CharacterController.PLAYER.PLAYER_2);
+            PowerUpsManager.Instance.activatePowerUp(powerUpType, CharacterController.PLAYER.PLAYER_2);
             Destroy(gameObject);
         }
     }

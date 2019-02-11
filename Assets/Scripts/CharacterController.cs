@@ -19,7 +19,7 @@ public class CharacterController : MonoBehaviour
     public PLAYER Player;
 
     const float FAST_SPEED = 1.5f;
-                                  
+
     public enum PLAYER
     {
         PLAYER_1,
@@ -56,25 +56,25 @@ public class CharacterController : MonoBehaviour
         switch (getCurrentPlayer())
         {
             case PLAYER.PLAYER_1:
-                {                                             
+                {
                     playerAnimator = player1.GetComponent<Animator>();
                     break;
                 }
             case PLAYER.PLAYER_2:
-                {                                            
-                    playerAnimator = player2.GetComponent<Animator>();  
+                {
+                    playerAnimator = player2.GetComponent<Animator>();
                     break;
                 }
-        }           
-        playerRigidbody = GetComponent<Rigidbody2D>();     
+        }
+        playerRigidbody = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
-    {          
+    {
         switch (getCurrentPlayer())
         {
             case PLAYER.PLAYER_1:
-                {    
+                {
                     player1Movement();
                     playerPos = player1.transform.position;
                     break;
@@ -107,7 +107,7 @@ public class CharacterController : MonoBehaviour
                 GameManager.Instance.playerBomb = PLAYER.PLAYER_1;
                 if (GameManager.Instance.player1Powerup)
                 {
-                    if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.MORE_BOMBS)
+                    if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.MORE_BOMBS)
                     {
                         GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.MORE_BOMBS);
                     }
@@ -119,17 +119,17 @@ public class CharacterController : MonoBehaviour
                 else
                 {
                     GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.NONE);
-                }  
+                }
             }
         }
-        else if(player == PLAYER.PLAYER_2)
+        else if (player == PLAYER.PLAYER_2)
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
                 GameManager.Instance.playerBomb = PLAYER.PLAYER_2;
                 if (GameManager.Instance.player2Powerup)
                 {
-                    if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.MORE_BOMBS)
+                    if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.MORE_BOMBS)
                     {
                         GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.MORE_BOMBS);
                     }
@@ -143,17 +143,17 @@ public class CharacterController : MonoBehaviour
                     GameManager.Instance.spawnBombs(playerPos, PowerUpsManager.PowerUps.NONE);
                 }
             }
-        }     
-        
+        }
+
     }
-           
+
 
     public void player1Movement()
     {
         //Horizontal Movement  
         if (GameManager.Instance.player1Powerup)
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.FAST_PACE)
             {
                 horizontalSpeed = Input.GetAxis("HorizontalP1") * runSpeed * FAST_SPEED;
             }
@@ -187,9 +187,9 @@ public class CharacterController : MonoBehaviour
         }
 
         // Vertical Movement                                                                     
-        if(GameManager.Instance.player1Powerup)
+        if (GameManager.Instance.player1Powerup)
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.FAST_PACE)
             {
                 verticalSpeed = Input.GetAxis("VerticalP1") * runSpeed * FAST_SPEED;
             }
@@ -228,7 +228,7 @@ public class CharacterController : MonoBehaviour
         //Horizontal Movement
         if (GameManager.Instance.player2Powerup)
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.FAST_PACE)
             {
                 horizontalSpeed = Input.GetAxis("HorizontalP2") * runSpeed * FAST_SPEED;
             }
@@ -262,16 +262,16 @@ public class CharacterController : MonoBehaviour
         }
 
         // Vertical Movement                                                                      
-        if(GameManager.Instance.player2Powerup)
+        if (GameManager.Instance.player2Powerup)
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.FAST_PACE)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.FAST_PACE)
             {
                 verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed * FAST_SPEED;
             }
             else
             {
                 verticalSpeed = Input.GetAxis("VerticalP2") * runSpeed;
-            }    
+            }
         }
         else
         {
@@ -302,13 +302,13 @@ public class CharacterController : MonoBehaviour
         // Move the character by finding the target velocity
 
         if (axis == AXIS.HORIZONTAL)
-        {                              
+        {
             targetVelocity = new Vector2(speed * 2f, playerRigidbody.velocity.y);
         }
         else if (axis == AXIS.VERTICAL)
-        {                                                        
+        {
             targetVelocity = new Vector2(playerRigidbody.velocity.x, speed * 2f);
-        }                 
+        }
         playerRigidbody.velocity = targetVelocity;
     }
 

@@ -26,15 +26,10 @@ public class PowerUpsManager : MonoBehaviour
 
     private void Start()
     {
-        currPowerUp = PowerUps.NONE;    
+        currPowerUp = PowerUps.NONE;
     }
 
-    public PowerUps getCurrentPowerUp()
-    {
-        return currPowerUp;
-    }
-
-    public void activatePowerUp(PowerUps powerUp,CharacterController.PLAYER player)
+    public void activatePowerUp(PowerUps powerUp, CharacterController.PLAYER player)
     {
         powerUpActive = true;
         currPowerUp = powerUp;
@@ -55,14 +50,15 @@ public class PowerUpsManager : MonoBehaviour
         else if (player == CharacterController.PLAYER.PLAYER_2)
         {
             GameManager.Instance.player1Powerup = false;
-            GameManager.Instance.player2Powerup = true;   
+            GameManager.Instance.player2Powerup = true;
+
             GameObject player1Radial = GameManager.Instance.inGameSettingsPanel.GetComponent<InGameUISettings>().player1RPB;
             GameObject player2Radial = GameManager.Instance.inGameSettingsPanel.GetComponent<InGameUISettings>().player2RPB;
             player1Radial.SetActive(false);
             player2Radial.SetActive(true);
             player2Radial.GetComponent<RadialImageProgression>().CT = player2Radial.GetComponent<RadialImageProgression>().countdownTime;
             StartCoroutine(player2Radial.GetComponent<RadialImageProgression>().countdownAnimation());
-        }   
+        }
     }
 
     private void Update()
@@ -72,7 +68,7 @@ public class PowerUpsManager : MonoBehaviour
             powerUpCountdown -= Time.deltaTime;
         }
 
-        if(powerUpCountdown <=0)
+        if (powerUpCountdown <= 0)
         {
             powerUpActive = false;
         }

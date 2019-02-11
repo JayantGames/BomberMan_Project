@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class RadialImageProgression : MonoBehaviour
 {
     public Transform loadingBar;
-    public Transform textIndicator;  
+    public Transform textIndicator;
     [SerializeField]
     private float currentAmount;
     [SerializeField]
@@ -16,7 +16,7 @@ public class RadialImageProgression : MonoBehaviour
 
     public void Update()
     {
-        if (loadingBar.GetComponent<Image>().fillAmount == 0)
+        if (loadingBar.GetComponent<Image>().fillAmount == 0 || PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.NONE)
         {
             countdownTime = 10f;
             textIndicator.GetComponent<Text>().text = countdownTime.ToString();
@@ -43,5 +43,5 @@ public class RadialImageProgression : MonoBehaviour
     {
         float fill = (float)countdownTime / CT;
         loadingBar.GetComponent<Image>().fillAmount = fill;
-    }         
+    }
 }

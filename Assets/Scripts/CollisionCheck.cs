@@ -10,14 +10,14 @@ public class CollisionCheck : MonoBehaviour
         {
             case "Player1":
                 {
-                    GameManager.Instance.player1Life = false; 
-                    Instantiate(GameManager.Instance.deathPrefab, collision.transform.position,Quaternion.identity);
+                    GameManager.Instance.player1Alive = false;
+                    Instantiate(GameManager.Instance.deathPrefab, collision.transform.position, Quaternion.identity);
                     Destroy(collision.gameObject);
                     break;
                 }
             case "Player2":
                 {
-                    GameManager.Instance.player2Life = false;
+                    GameManager.Instance.player2Alive = false;
                     Instantiate(GameManager.Instance.deathPrefab, collision.transform.position, Quaternion.identity);
                     Destroy(collision.gameObject);
                     break;
@@ -34,6 +34,6 @@ public class CollisionCheck : MonoBehaviour
                     break;
                 }
         }
-    }    
+    }
 }
 

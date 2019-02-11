@@ -12,11 +12,13 @@ public class InGameUISettings : MonoBehaviour
     public Text player2UIScore;
     public Text highScore;
     public Text MenuHeading;
+    public Text levelTimer;
     public GameObject resumeButton;
     public GameObject player1RPB;
     public GameObject player2RPB;
     public GameObject gameOverPanel;
     public GameObject topUIPanel;
+
 
     public void pauseGame()
     {
@@ -74,13 +76,26 @@ public class InGameUISettings : MonoBehaviour
                 }
         }
 
-        if(GameManager.Instance.paused)
+        if (GameManager.Instance.paused)
         {
             MenuHeading.text = "PAUSED";
         }
-        else if(GameManager.Instance.gameOver)
+        else if (GameManager.Instance.gameOver)
         {
-            MenuHeading.text = "GAMEOVER";
+            if (GameManager.Instance.player1Alive && !GameManager.Instance.player2Alive)
+            {
+                MenuHeading.text = "Player 1 Won";
+            }
+            else if (!GameManager.Instance.player1Alive && GameManager.Instance.player2Alive)
+            {
+                MenuHeading.text = "Player 2 Won";
+            }
+            else
+            {
+                MenuHeading.text = "Draw";
+            }
         }
+
+        levelTimer.text = "Time Left : " + ((int)GameManager.Instance.levelTimer).ToString();
     }
 }

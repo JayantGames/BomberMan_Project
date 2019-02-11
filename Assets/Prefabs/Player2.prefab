@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1476419149688686065}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,9 +121,6 @@ MonoBehaviour:
   playerPos: {x: 0, y: 0}
   runSpeed: 2
   Player: 1
-  gameBoardTileMap: {fileID: 0}
-  bombPrefab: {fileID: 5854936701621133474, guid: e05463a7f5f79d24e8d818225299b2a4,
-    type: 3}
 --- !u!50 &1476419149688686078
 Rigidbody2D:
   serializedVersion: 4

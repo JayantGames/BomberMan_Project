@@ -68,10 +68,10 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InGameUISettings.cs" />
     <Compile Include="Assets\Scripts\InstantiateBombs.cs" />
+    <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\MapDestroyer.cs" />
     <Compile Include="Assets\Scripts\PowerUpListener.cs" />
     <Compile Include="Assets\Scripts\PowerUpsManager.cs" />
-    <Compile Include="Assets\Scripts\PrefabTile.cs" />
     <Compile Include="Assets\Scripts\RadialImageProgression.cs" />
     <Compile Include="Assets\Scripts\SceneManagement.cs" />
     <Compile Include="Assets\Scripts\SelfDestruct.cs" />

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BombExplosion : MonoBehaviour
 {
-   private float countdown = 2f;
+    private float countdown = 2f;
     public bool player1Bomb;
     public bool player2Bomb;
 
     private void Start()
     {
-        if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.RC_BOMBS)
+        if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.RC_BOMBS)
         {
             countdown = 10f;
         }
@@ -29,14 +29,14 @@ public class BombExplosion : MonoBehaviour
         countdown -= Time.deltaTime;
 
         if (countdown <= 0f)
-        {                                 
+        {
             MapDestroyer.Instance.Explode(transform.position);
             GameManager.Instance.bombDestroyed();
             GameManager.Instance.bombsSpawnList.Remove(gameObject);
             Destroy(gameObject);
-        }   
-        
-        if(GameManager.Instance.detonateBomb)
+        }
+
+        if (GameManager.Instance.detonateBomb)
         {
             GameManager.Instance.detonateBomb = false;
             countdown = 0f;

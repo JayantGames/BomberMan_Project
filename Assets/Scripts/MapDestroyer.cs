@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections;   
+using System.Collections;
 using System.Collections.Generic;
 
 public class MapDestroyer : MonoBehaviour
@@ -9,7 +9,7 @@ public class MapDestroyer : MonoBehaviour
 
     public Tilemap tileMap;
     public Tile wallTile;
-    public Tile destructibleTile;   
+    public Tile destructibleTile;
 
     public GameObject explosionPrefab;
     public GameObject coinPrefab;
@@ -22,36 +22,31 @@ public class MapDestroyer : MonoBehaviour
     {
         Instance = this;
     }
-
-
-
+         
     public void Explode(Vector2 worldPos)
     {
         Vector3Int originCell = tileMap.WorldToCell(worldPos);
         ExplodeCell(originCell);
-        Debug.Log("PowerUpsManager.Instance.getCurrentPowerUp() : " + PowerUpsManager.Instance.getCurrentPowerUp());
 
         if (ExplodeCell(originCell + new Vector3Int(1, 0, 0)))
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.LONG_BLAST)
             {
                 ExplodeCell(originCell + new Vector3Int(2, 0, 0));
             }
-         }
-
-
+        }
+          
         if (ExplodeCell(originCell + new Vector3Int(0, 1, 0)))
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.LONG_BLAST)
             {
                 ExplodeCell(originCell + new Vector3Int(0, 2, 0));
             }
-        }
-
+        }   
 
         if (ExplodeCell(originCell + new Vector3Int(-1, 0, 0)))
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.LONG_BLAST)
             {
                 ExplodeCell(originCell + new Vector3Int(-2, 0, 0));
             }
@@ -59,7 +54,7 @@ public class MapDestroyer : MonoBehaviour
 
         if (ExplodeCell(originCell + new Vector3Int(0, -1, 0)))
         {
-            if (PowerUpsManager.Instance.getCurrentPowerUp() == PowerUpsManager.PowerUps.LONG_BLAST)
+            if (PowerUpsManager.Instance.currPowerUp == PowerUpsManager.PowerUps.LONG_BLAST)
             {
                 ExplodeCell(originCell + new Vector3Int(0, -2, 0));
             }
@@ -77,14 +72,12 @@ public class MapDestroyer : MonoBehaviour
 
         if (tile == destructibleTile)
         {
-            //  Vector3 tilePos = tileMap.GetCellCenterWorld(cell);
-            Vector3 tilePos = tileMap.GetCellCenterWorld(cell);        
+            Vector3 tilePos = tileMap.GetCellCenterWorld(cell);
             Instantiate(coinPrefab, tilePos, Quaternion.identity);
             tileMap.SetTile(cell, null);
             saveScore(tileValue);
-        }
+        }     
 
-                 
         Vector3 pos = tileMap.GetCellCenterWorld(cell);
         Instantiate(explosionPrefab, pos, Quaternion.identity);
 
@@ -109,17 +102,17 @@ public class MapDestroyer : MonoBehaviour
     }
 
     public IEnumerator instantiateRandomPowerUp(Vector3 cell)
-    {                                            
+    {
         yield return new WaitForSeconds(0.65f);
 
-        if (Random.value > 0.1)
+        if (Random.value > 0.75)
         {
-            for (int i = 0; i < GameManager.Instance.powerUpPrefabsList.Count-1; i++)
-            {                                             
+            for (int i = 0; i < GameManager.Instance.powerUpPrefabsList.Count - 1; i++)
+            {
                 GameObject randomlyInstantiatedPowerUpInstance = Instantiate(returnRandomPowerUp(), cell, Quaternion.identity);
                 randomlyInstantiatedPowerUp.Add(randomlyInstantiatedPowerUpInstance);
-                randomInstantiation = true; 
+                randomInstantiation = true;
             }
-        }                                             
+        }
     }
 }
